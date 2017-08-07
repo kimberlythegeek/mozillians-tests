@@ -3,9 +3,9 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import uuid
-
 import pytest
-
+from datetime import datetime
+from py.xml import html
 from tests import restmail
 
 
