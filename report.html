@@ -3,7 +3,164 @@
   <head>
     <meta charset="utf-8"/>
     <title>Test Report</title>
-    <link href="assets/style.css" rel="stylesheet" type="text/css"/></head>
+    <style>body {
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	min-width: 1200px;
+	color: #999;
+}
+h2 {
+	font-size: 16px;
+	color: black;
+}
+
+p {
+    color: black;
+}
+
+a {
+	color: #999;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+/******************************
+ * SUMMARY INFORMATION
+ ******************************/
+
+#environment td {
+	padding: 5px;
+	border: 1px solid #E6E6E6;
+}
+
+#environment tr:nth-child(odd) {
+	background-color: #f6f6f6;
+}
+
+/******************************
+ * TEST RESULT COLORS
+ ******************************/
+span.passed, .passed .col-result {
+	color: green;
+}
+span.skipped, span.xfailed, span.rerun, .skipped .col-result, .xfailed .col-result, .rerun .col-result {
+	color: orange;
+}
+span.error, span.failed, span.xpassed, .error .col-result, .failed .col-result, .xpassed .col-result  {
+	color: red;
+}
+
+
+/******************************
+ * RESULTS TABLE
+ *
+ * 1. Table Layout
+ * 2. Extra
+ * 3. Sorting items
+ *
+ ******************************/
+
+/*------------------
+ * 1. Table Layout
+ *------------------*/
+
+#results-table {
+	border: 1px solid #e6e6e6;
+	color: #999;
+	font-size: 12px;
+	width: 100%
+}
+
+#results-table th, #results-table td {
+	padding: 5px;
+	border: 1px solid #E6E6E6;
+	text-align: left
+}
+#results-table th {
+	font-weight: bold
+}
+
+/*------------------
+ * 2. Extra
+ *------------------*/
+
+.log:only-child {
+	height: inherit
+}
+.log {
+	background-color: #e6e6e6;
+	border: 1px solid #e6e6e6;
+	color: black;
+	display: block;
+	font-family: "Courier New", Courier, monospace;
+	height: 230px;
+	overflow-y: scroll;
+	padding: 5px;
+	white-space: pre-wrap
+}
+div.image {
+	border: 1px solid #e6e6e6;
+	float: right;
+	height: 240px;
+	margin-left: 5px;
+	overflow: hidden;
+	width: 320px
+}
+div.image img {
+	width: 320px
+}
+.collapsed {
+	display: none;
+}
+.expander::after {
+	content: " (show details)";
+	color: #BBB;
+	font-style: italic;
+	cursor: pointer;
+}
+.collapser::after {
+	content: " (hide details)";
+	color: #BBB;
+	font-style: italic;
+	cursor: pointer;
+}
+
+/*------------------
+ * 3. Sorting items
+ *------------------*/
+.sortable {
+	cursor: pointer;
+}
+
+.sort-icon {
+	font-size: 0px;
+	float: left;
+	margin-right: 5px;
+	margin-top: 5px;
+	/*triangle*/
+	width: 0;
+	height: 0;
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+}
+
+.inactive .sort-icon {
+	/*finish triangle*/
+	border-top: 8px solid #E6E6E6;
+}
+
+.asc.active .sort-icon {
+	/*finish triangle*/
+	border-bottom: 8px solid #999;
+}
+
+.desc.active .sort-icon {
+	/*finish triangle*/
+	border-top: 8px solid #999;
+}
+</style></head>
   <body onLoad="init()">
     <script>/* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this file,
@@ -228,7 +385,7 @@ function filter_table(elem) {
     not_found_message.hidden = !all_rows_hidden;
 }
 </script>
-    <p>Report generated on 07-Aug-2017 at 14:38:44 by<a href="https://pypi.python.org/pypi/pytest-html"> pytest-html</a> v1.15.1</p>
+    <p>Report generated on 07-Aug-2017 at 14:46:29 by<a href="https://pypi.python.org/pypi/pytest-html"> pytest-html</a> v1.15.1</p>
     <h2>Environment</h2>
     <table id="environment">
       <tr>
@@ -250,7 +407,7 @@ function filter_table(elem) {
         <td>Python</td>
         <td>2.7.10</td></tr></table>
     <h2>Summary</h2>
-    <p>60 tests ran in 11.29 seconds. </p>
+    <p>60 tests ran in 8.60 seconds. </p>
     <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="passed">57 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="failed">2 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="xfailed">1 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
     <h2>Results</h2>
     <table id="results-table">
@@ -267,43 +424,43 @@ function filter_table(elem) {
       <tbody class="failed results-table-row">
         <tr>
           <td class="col-result">Failed</td>
-          <td class="col-time">2017-08-07 20:38:44.461517</td>
+          <td class="col-time">2017-08-07 20:46:29.390731</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[color-contrast]</td>
           <td>Elements must have sufficient color contrast</td>
           <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="6">
-            <div class="log">self = &lt;tests.test_about_page.TestAccessibility instance at 0x106837f38&gt;, pytestconfig = &lt;_pytest.config.Config object at 0x1048cfa50&gt;, rule = 'color-contrast'<br/><br/>    @pytest.mark.parametrize("rule", _rules)<br/>    @pytest.mark.nondestructive<br/>    def test_accessibility_rules(self, pytestconfig, rule):<br/>        violations = dict((k['id'], k) for k in pytestconfig.data['violations'])<br/>        if(rule in violations):<br/>            TestAccessibility.test_accessibility_rules.__func__.__doc__ = violations[rule]['help']<br/>&gt;       assert rule not in violations, report(violations[rule])<br/><span class="error">E       AssertionError: </span><br/><span class="error">E         </span><br/><span class="error">E         </span><br/><span class="error">E         Rule Violated:</span><br/><span class="error">E         color-contrast - Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds</span><br/><span class="error">E         	URL: https://dequeuniversity.com/rules/axe/2.3/color-contrast?application=axeAPI</span><br/><span class="error">E         	Impact Level: serious</span><br/><span class="error">E         	Tags: cat.color wcag2aa wcag143</span><br/><span class="error">E         	Elements Affected:</span><br/><span class="error">E         	1) Target: p:nth-child(6) &gt; a[href$="Mozillians#Roadmap"]</span><br/><span class="error">E         		Element has insufficient color contrast of 3.27 (foreground color: #0096dd, background color: #ffffff, font size: 10.5pt, font weight: normal)</span><br/><span class="error">E         	2) Target: p:nth-child(6) &gt; a[href$="Mozillians#Get_Involved"]</span><br/><span class="error">E         		Element has insufficient color contrast of 3.27 (foreground color: #0096dd, background color: #ffffff, font size: 10.5pt, font weight: normal)</span><br/><span class="error">E         	3) Target: #privacy &gt; p &gt; a[href$="websites/"]</span><br/><span class="error">E         		Element has insufficient color contrast of 3.27 (foreground color: #0096dd, background color: #ffffff, font size: 10.5pt, font weight: normal)</span><br/><span class="error">E         	4) Target: #get-involved &gt; p &gt; a</span><br/><span class="error">E         		Element has insufficient color contrast of 3.27 (foreground color: #0096dd, background color: #ffffff, font size: 10.5pt, font weight: normal)</span><br/><span class="error">E         </span><br/><span class="error">E         </span><br/><span class="error">E         </span><br/><span class="error">E       assert 'color-contrast' not in {'color-contrast': {'description': 'Ensures the contrast between foreground and background colors meets WCAG 2 AA cont...ust have labels', 'helpUrl': 'https://dequeuniversity.com/rules/axe/2.3/label?application=axeAPI', 'id': 'label', ...}}</span><br/><br/>tests/test_about_page.py:139: AssertionError<br/></div></td></tr></tbody>
+            <div class="log">self = &lt;tests.test_about_page.TestAccessibility instance at 0x1025332d8&gt;, pytestconfig = &lt;_pytest.config.Config object at 0x1015caa90&gt;, rule = 'color-contrast'<br/><br/>    @pytest.mark.parametrize("rule", _rules)<br/>    @pytest.mark.nondestructive<br/>    def test_accessibility_rules(self, pytestconfig, rule):<br/>        violations = dict((k['id'], k) for k in pytestconfig.data['violations'])<br/>        if(rule in violations):<br/>            TestAccessibility.test_accessibility_rules.__func__.__doc__ = violations[rule]['help']<br/>&gt;       assert rule not in violations, report(violations[rule])<br/><span class="error">E       AssertionError: </span><br/><span class="error">E         </span><br/><span class="error">E         </span><br/><span class="error">E         Rule Violated:</span><br/><span class="error">E         color-contrast - Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds</span><br/><span class="error">E         	URL: https://dequeuniversity.com/rules/axe/2.3/color-contrast?application=axeAPI</span><br/><span class="error">E         	Impact Level: serious</span><br/><span class="error">E         	Tags: cat.color wcag2aa wcag143</span><br/><span class="error">E         	Elements Affected:</span><br/><span class="error">E         	1) Target: p:nth-child(6) &gt; a[href$="Mozillians#Roadmap"]</span><br/><span class="error">E         		Element has insufficient color contrast of 3.27 (foreground color: #0096dd, background color: #ffffff, font size: 10.5pt, font weight: normal)</span><br/><span class="error">E         	2) Target: p:nth-child(6) &gt; a[href$="Mozillians#Get_Involved"]</span><br/><span class="error">E         		Element has insufficient color contrast of 3.27 (foreground color: #0096dd, background color: #ffffff, font size: 10.5pt, font weight: normal)</span><br/><span class="error">E         	3) Target: #privacy &gt; p &gt; a[href$="websites/"]</span><br/><span class="error">E         		Element has insufficient color contrast of 3.27 (foreground color: #0096dd, background color: #ffffff, font size: 10.5pt, font weight: normal)</span><br/><span class="error">E         	4) Target: #get-involved &gt; p &gt; a</span><br/><span class="error">E         		Element has insufficient color contrast of 3.27 (foreground color: #0096dd, background color: #ffffff, font size: 10.5pt, font weight: normal)</span><br/><span class="error">E         </span><br/><span class="error">E         </span><br/><span class="error">E         </span><br/><span class="error">E       assert 'color-contrast' not in {'color-contrast': {'description': 'Ensures the contrast between foreground and background colors meets WCAG 2 AA cont...ust have labels', 'helpUrl': 'https://dequeuniversity.com/rules/axe/2.3/label?application=axeAPI', 'id': 'label', ...}}</span><br/><br/>tests/test_about_page.py:139: AssertionError<br/></div></td></tr></tbody>
       <tbody class="failed results-table-row">
         <tr>
           <td class="col-result">Failed</td>
-          <td class="col-time">2017-08-07 20:38:44.515632</td>
+          <td class="col-time">2017-08-07 20:46:29.420151</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[label]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="6">
-            <div class="log">self = &lt;tests.test_about_page.TestAccessibility instance at 0x105404170&gt;, pytestconfig = &lt;_pytest.config.Config object at 0x1048cfa50&gt;, rule = 'label'<br/><br/>    @pytest.mark.parametrize("rule", _rules)<br/>    @pytest.mark.nondestructive<br/>    def test_accessibility_rules(self, pytestconfig, rule):<br/>        violations = dict((k['id'], k) for k in pytestconfig.data['violations'])<br/>        if(rule in violations):<br/>            TestAccessibility.test_accessibility_rules.__func__.__doc__ = violations[rule]['help']<br/>&gt;       assert rule not in violations, report(violations[rule])<br/><span class="error">E       AssertionError: </span><br/><span class="error">E         </span><br/><span class="error">E         </span><br/><span class="error">E         Rule Violated:</span><br/><span class="error">E         label - Ensures every form element has a label</span><br/><span class="error">E         	URL: https://dequeuniversity.com/rules/axe/2.3/label?application=axeAPI</span><br/><span class="error">E         	Impact Level: critical</span><br/><span class="error">E         	Tags: cat.forms wcag2a wcag332 wcag131 section508 section508.22.n</span><br/><span class="error">E         	Elements Affected:</span><br/><span class="error">E         	1) Target: form &gt; input[type="text"][name="q"]</span><br/><span class="error">E         		aria-label attribute does not exist or is empty</span><br/><span class="error">E         		aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible</span><br/><span class="error">E         		Form element does not have an implicit (wrapped) &lt;label&gt;</span><br/><span class="error">E         		Form element does not have an explicit &lt;label&gt;</span><br/><span class="error">E         		Element has no title attribute or the title attribute is empty</span><br/><span class="error">E         	2) Target: #language</span><br/><span class="error">E         		aria-label attribute does not exist or is empty</span><br/><span class="error">E         		aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible</span><br/><span class="error">E         		Form element does not have an implicit (wrapped) &lt;label&gt;</span><br/><span class="error">E         		Form element does not have an explicit &lt;label&gt;</span><br/><span class="error">E         		Element has no title attribute or the title attribute is empty</span><br/><span class="error">E         </span><br/><span class="error">E         </span><br/><span class="error">E         </span><br/><span class="error">E       assert 'label' not in {'color-contrast': {'description': 'Ensures the contrast between foreground and background colors meets WCAG 2 AA cont...ust have labels', 'helpUrl': 'https://dequeuniversity.com/rules/axe/2.3/label?application=axeAPI', 'id': 'label', ...}}</span><br/><br/>tests/test_about_page.py:139: AssertionError<br/></div></td></tr></tbody>
+            <div class="log">self = &lt;tests.test_about_page.TestAccessibility instance at 0x1024675f0&gt;, pytestconfig = &lt;_pytest.config.Config object at 0x1015caa90&gt;, rule = 'label'<br/><br/>    @pytest.mark.parametrize("rule", _rules)<br/>    @pytest.mark.nondestructive<br/>    def test_accessibility_rules(self, pytestconfig, rule):<br/>        violations = dict((k['id'], k) for k in pytestconfig.data['violations'])<br/>        if(rule in violations):<br/>            TestAccessibility.test_accessibility_rules.__func__.__doc__ = violations[rule]['help']<br/>&gt;       assert rule not in violations, report(violations[rule])<br/><span class="error">E       AssertionError: </span><br/><span class="error">E         </span><br/><span class="error">E         </span><br/><span class="error">E         Rule Violated:</span><br/><span class="error">E         label - Ensures every form element has a label</span><br/><span class="error">E         	URL: https://dequeuniversity.com/rules/axe/2.3/label?application=axeAPI</span><br/><span class="error">E         	Impact Level: critical</span><br/><span class="error">E         	Tags: cat.forms wcag2a wcag332 wcag131 section508 section508.22.n</span><br/><span class="error">E         	Elements Affected:</span><br/><span class="error">E         	1) Target: form &gt; input[type="text"][name="q"]</span><br/><span class="error">E         		aria-label attribute does not exist or is empty</span><br/><span class="error">E         		aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible</span><br/><span class="error">E         		Form element does not have an implicit (wrapped) &lt;label&gt;</span><br/><span class="error">E         		Form element does not have an explicit &lt;label&gt;</span><br/><span class="error">E         		Element has no title attribute or the title attribute is empty</span><br/><span class="error">E         	2) Target: #language</span><br/><span class="error">E         		aria-label attribute does not exist or is empty</span><br/><span class="error">E         		aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible</span><br/><span class="error">E         		Form element does not have an implicit (wrapped) &lt;label&gt;</span><br/><span class="error">E         		Form element does not have an explicit &lt;label&gt;</span><br/><span class="error">E         		Element has no title attribute or the title attribute is empty</span><br/><span class="error">E         </span><br/><span class="error">E         </span><br/><span class="error">E         </span><br/><span class="error">E       assert 'label' not in {'color-contrast': {'description': 'Ensures the contrast between foreground and background colors meets WCAG 2 AA cont...ust have labels', 'helpUrl': 'https://dequeuniversity.com/rules/axe/2.3/label?application=axeAPI', 'id': 'label', ...}}</span><br/><br/>tests/test_about_page.py:139: AssertionError<br/></div></td></tr></tbody>
       <tbody class="xfailed results-table-row">
         <tr>
           <td class="col-result">XFailed</td>
-          <td class="col-time">2017-08-07 20:38:44.431844</td>
+          <td class="col-time">2017-08-07 20:46:29.339206</td>
           <td class="col-name">tests/test_about_page.py::TestAboutPage::()::test_that_links_in_the_about_page_return_200_code</td>
           <td>None</td>
-          <td class="col-duration">0.76</td>
+          <td class="col-duration">0.83</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="6">
-            <div class="log">self = &lt;tests.test_about_page.TestAboutPage instance at 0x10540b0e0&gt;, base_url = 'https://web-mozillians-staging.production.paas.mozilla.community'<br/><br/>    @pytest.mark.nondestructive<br/>    @pytest.mark.xfail<br/>    def test_that_links_in_the_about_page_return_200_code(self, base_url):<br/>        crawler = LinkCrawler(base_url)<br/>        urls = crawler.collect_links('/about', id='main')<br/>        bad_urls = []<br/>    <br/>        assert len(urls) &gt; 0<br/>    <br/>        for url in urls:<br/>&gt;           check_result = crawler.verify_status_code_is_ok(url)<br/><br/>tests/test_about_page.py:62: <br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/>pages/link_crawler.py:48: in verify_status_code_is_ok<br/>    r = requests.get(url, verify=False)<br/>../../.virtualenvs/moz-tests/lib/python2.7/site-packages/requests/api.py:72: in get<br/>    return request('get', url, params=params, **kwargs)<br/>../../.virtualenvs/moz-tests/lib/python2.7/site-packages/requests/api.py:58: in request<br/>    return session.request(method=method, url=url, **kwargs)<br/>../../.virtualenvs/moz-tests/lib/python2.7/site-packages/requests/sessions.py:502: in request<br/>    resp = self.send(prep, **send_kwargs)<br/>../../.virtualenvs/moz-tests/lib/python2.7/site-packages/requests/sessions.py:612: in send<br/>    r = adapter.send(request, **kwargs)<br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/><br/>self = &lt;requests.adapters.HTTPAdapter object at 0x1053fce10&gt;, request = &lt;PreparedRequest [GET]&gt;, stream = False, timeout = &lt;urllib3.util.timeout.Timeout object at 0x10564da90&gt;, verify = False, cert = None, proxies = OrderedDict()<br/><br/>    def send(self, request, stream=False, timeout=None, verify=True, cert=None, proxies=None):<br/>        """Sends PreparedRequest object. Returns Response object.<br/>    <br/>            :param request: The :class:`PreparedRequest &lt;PreparedRequest&gt;` being sent.<br/>            :param stream: (optional) Whether to stream the request content.<br/>            :param timeout: (optional) How long to wait for the server to send<br/>                data before giving up, as a float, or a :ref:`(connect timeout,<br/>                read timeout) &lt;timeouts&gt;` tuple.<br/>            :type timeout: float or tuple or urllib3 Timeout object<br/>            :param verify: (optional) Either a boolean, in which case it controls whether<br/>                we verify the server's TLS certificate, or a string, in which case it<br/>                must be a path to a CA bundle to use<br/>            :param cert: (optional) Any user-provided SSL certificate to be trusted.<br/>            :param proxies: (optional) The proxies dictionary to apply to the request.<br/>            :rtype: requests.Response<br/>            """<br/>    <br/>        conn = self.get_connection(request.url, proxies)<br/>    <br/>        self.cert_verify(conn, request.url, verify, cert)<br/>        url = self.request_url(request, proxies)<br/>        self.add_headers(request)<br/>    <br/>        chunked = not (request.body is None or 'Content-Length' in request.headers)<br/>    <br/>        if isinstance(timeout, tuple):<br/>            try:<br/>                connect, read = timeout<br/>                timeout = TimeoutSauce(connect=connect, read=read)<br/>            except ValueError as e:<br/>                # this may raise a string formatting error.<br/>                err = ("Invalid timeout {0}. Pass a (connect, read) "<br/>                       "timeout tuple, or a single float to set "<br/>                       "both timeouts to the same value".format(timeout))<br/>                raise ValueError(err)<br/>        elif isinstance(timeout, TimeoutSauce):<br/>            pass<br/>        else:<br/>            timeout = TimeoutSauce(connect=timeout, read=timeout)<br/>    <br/>        try:<br/>            if not chunked:<br/>                resp = conn.urlopen(<br/>                    method=request.method,<br/>                    url=url,<br/>                    body=request.body,<br/>                    headers=request.headers,<br/>                    redirect=False,<br/>                    assert_same_host=False,<br/>                    preload_content=False,<br/>                    decode_content=False,<br/>                    retries=self.max_retries,<br/>                    timeout=timeout<br/>                )<br/>    <br/>            # Send the request.<br/>            else:<br/>                if hasattr(conn, 'proxy_pool'):<br/>                    conn = conn.proxy_pool<br/>    <br/>                low_conn = conn._get_conn(timeout=DEFAULT_POOL_TIMEOUT)<br/>    <br/>                try:<br/>                    low_conn.putrequest(request.method,<br/>                                        url,<br/>                                        skip_accept_encoding=True)<br/>    <br/>                    for header, value in request.headers.items():<br/>                        low_conn.putheader(header, value)<br/>    <br/>                    low_conn.endheaders()<br/>    <br/>                    for i in request.body:<br/>                        low_conn.send(hex(len(i))[2:].encode('utf-8'))<br/>                        low_conn.send(b'\r\n')<br/>                        low_conn.send(i)<br/>                        low_conn.send(b'\r\n')<br/>                    low_conn.send(b'0\r\n\r\n')<br/>    <br/>                    # Receive the response from the server<br/>                    try:<br/>                        # For Python 2.7+ versions, use buffering of HTTP<br/>                        # responses<br/>                        r = low_conn.getresponse(buffering=True)<br/>                    except TypeError:<br/>                        # For compatibility with Python 2.6 versions and back<br/>                        r = low_conn.getresponse()<br/>    <br/>                    resp = HTTPResponse.from_httplib(<br/>                        r,<br/>                        pool=conn,<br/>                        connection=low_conn,<br/>                        preload_content=False,<br/>                        decode_content=False<br/>                    )<br/>                except:<br/>                    # If we hit any problems here, clean up the connection.<br/>                    # Then, reraise so that we can handle the actual exception.<br/>                    low_conn.close()<br/>                    raise<br/>    <br/>        except (ProtocolError, socket.error) as err:<br/>            raise ConnectionError(err, request=request)<br/>    <br/>        except MaxRetryError as e:<br/>            if isinstance(e.reason, ConnectTimeoutError):<br/>                # TODO: Remove this in 3.0.0: see #2811<br/>                if not isinstance(e.reason, NewConnectionError):<br/>                    raise ConnectTimeout(e, request=request)<br/>    <br/>            if isinstance(e.reason, ResponseError):<br/>                raise RetryError(e, request=request)<br/>    <br/>            if isinstance(e.reason, _ProxyError):<br/>                raise ProxyError(e, request=request)<br/>    <br/>            raise ConnectionError(e, request=request)<br/>    <br/>        except ClosedPoolError as e:<br/>            raise ConnectionError(e, request=request)<br/>    <br/>        except _ProxyError as e:<br/>            raise ProxyError(e)<br/>    <br/>        except (_SSLError, _HTTPError) as e:<br/>            if isinstance(e, _SSLError):<br/>&gt;               raise SSLError(e, request=request)<br/><span class="error">E               SSLError: [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] sslv3 alert handshake failure (_ssl.c:590)</span><br/><br/>../../.virtualenvs/moz-tests/lib/python2.7/site-packages/requests/adapters.py:514: SSLError<br/></div></td></tr></tbody>
+            <div class="log">self = &lt;tests.test_about_page.TestAboutPage instance at 0x102451d40&gt;, base_url = 'https://web-mozillians-staging.production.paas.mozilla.community'<br/><br/>    @pytest.mark.nondestructive<br/>    @pytest.mark.xfail<br/>    def test_that_links_in_the_about_page_return_200_code(self, base_url):<br/>        crawler = LinkCrawler(base_url)<br/>        urls = crawler.collect_links('/about', id='main')<br/>        bad_urls = []<br/>    <br/>        assert len(urls) &gt; 0<br/>    <br/>        for url in urls:<br/>&gt;           check_result = crawler.verify_status_code_is_ok(url)<br/><br/>tests/test_about_page.py:62: <br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/>pages/link_crawler.py:48: in verify_status_code_is_ok<br/>    r = requests.get(url, verify=False)<br/>../../.virtualenvs/moz-tests/lib/python2.7/site-packages/requests/api.py:72: in get<br/>    return request('get', url, params=params, **kwargs)<br/>../../.virtualenvs/moz-tests/lib/python2.7/site-packages/requests/api.py:58: in request<br/>    return session.request(method=method, url=url, **kwargs)<br/>../../.virtualenvs/moz-tests/lib/python2.7/site-packages/requests/sessions.py:502: in request<br/>    resp = self.send(prep, **send_kwargs)<br/>../../.virtualenvs/moz-tests/lib/python2.7/site-packages/requests/sessions.py:612: in send<br/>    r = adapter.send(request, **kwargs)<br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/><br/>self = &lt;requests.adapters.HTTPAdapter object at 0x1020f7ed0&gt;, request = &lt;PreparedRequest [GET]&gt;, stream = False, timeout = &lt;urllib3.util.timeout.Timeout object at 0x102349f50&gt;, verify = False, cert = None, proxies = OrderedDict()<br/><br/>    def send(self, request, stream=False, timeout=None, verify=True, cert=None, proxies=None):<br/>        """Sends PreparedRequest object. Returns Response object.<br/>    <br/>            :param request: The :class:`PreparedRequest &lt;PreparedRequest&gt;` being sent.<br/>            :param stream: (optional) Whether to stream the request content.<br/>            :param timeout: (optional) How long to wait for the server to send<br/>                data before giving up, as a float, or a :ref:`(connect timeout,<br/>                read timeout) &lt;timeouts&gt;` tuple.<br/>            :type timeout: float or tuple or urllib3 Timeout object<br/>            :param verify: (optional) Either a boolean, in which case it controls whether<br/>                we verify the server's TLS certificate, or a string, in which case it<br/>                must be a path to a CA bundle to use<br/>            :param cert: (optional) Any user-provided SSL certificate to be trusted.<br/>            :param proxies: (optional) The proxies dictionary to apply to the request.<br/>            :rtype: requests.Response<br/>            """<br/>    <br/>        conn = self.get_connection(request.url, proxies)<br/>    <br/>        self.cert_verify(conn, request.url, verify, cert)<br/>        url = self.request_url(request, proxies)<br/>        self.add_headers(request)<br/>    <br/>        chunked = not (request.body is None or 'Content-Length' in request.headers)<br/>    <br/>        if isinstance(timeout, tuple):<br/>            try:<br/>                connect, read = timeout<br/>                timeout = TimeoutSauce(connect=connect, read=read)<br/>            except ValueError as e:<br/>                # this may raise a string formatting error.<br/>                err = ("Invalid timeout {0}. Pass a (connect, read) "<br/>                       "timeout tuple, or a single float to set "<br/>                       "both timeouts to the same value".format(timeout))<br/>                raise ValueError(err)<br/>        elif isinstance(timeout, TimeoutSauce):<br/>            pass<br/>        else:<br/>            timeout = TimeoutSauce(connect=timeout, read=timeout)<br/>    <br/>        try:<br/>            if not chunked:<br/>                resp = conn.urlopen(<br/>                    method=request.method,<br/>                    url=url,<br/>                    body=request.body,<br/>                    headers=request.headers,<br/>                    redirect=False,<br/>                    assert_same_host=False,<br/>                    preload_content=False,<br/>                    decode_content=False,<br/>                    retries=self.max_retries,<br/>                    timeout=timeout<br/>                )<br/>    <br/>            # Send the request.<br/>            else:<br/>                if hasattr(conn, 'proxy_pool'):<br/>                    conn = conn.proxy_pool<br/>    <br/>                low_conn = conn._get_conn(timeout=DEFAULT_POOL_TIMEOUT)<br/>    <br/>                try:<br/>                    low_conn.putrequest(request.method,<br/>                                        url,<br/>                                        skip_accept_encoding=True)<br/>    <br/>                    for header, value in request.headers.items():<br/>                        low_conn.putheader(header, value)<br/>    <br/>                    low_conn.endheaders()<br/>    <br/>                    for i in request.body:<br/>                        low_conn.send(hex(len(i))[2:].encode('utf-8'))<br/>                        low_conn.send(b'\r\n')<br/>                        low_conn.send(i)<br/>                        low_conn.send(b'\r\n')<br/>                    low_conn.send(b'0\r\n\r\n')<br/>    <br/>                    # Receive the response from the server<br/>                    try:<br/>                        # For Python 2.7+ versions, use buffering of HTTP<br/>                        # responses<br/>                        r = low_conn.getresponse(buffering=True)<br/>                    except TypeError:<br/>                        # For compatibility with Python 2.6 versions and back<br/>                        r = low_conn.getresponse()<br/>    <br/>                    resp = HTTPResponse.from_httplib(<br/>                        r,<br/>                        pool=conn,<br/>                        connection=low_conn,<br/>                        preload_content=False,<br/>                        decode_content=False<br/>                    )<br/>                except:<br/>                    # If we hit any problems here, clean up the connection.<br/>                    # Then, reraise so that we can handle the actual exception.<br/>                    low_conn.close()<br/>                    raise<br/>    <br/>        except (ProtocolError, socket.error) as err:<br/>            raise ConnectionError(err, request=request)<br/>    <br/>        except MaxRetryError as e:<br/>            if isinstance(e.reason, ConnectTimeoutError):<br/>                # TODO: Remove this in 3.0.0: see #2811<br/>                if not isinstance(e.reason, NewConnectionError):<br/>                    raise ConnectTimeout(e, request=request)<br/>    <br/>            if isinstance(e.reason, ResponseError):<br/>                raise RetryError(e, request=request)<br/>    <br/>            if isinstance(e.reason, _ProxyError):<br/>                raise ProxyError(e, request=request)<br/>    <br/>            raise ConnectionError(e, request=request)<br/>    <br/>        except ClosedPoolError as e:<br/>            raise ConnectionError(e, request=request)<br/>    <br/>        except _ProxyError as e:<br/>            raise ProxyError(e)<br/>    <br/>        except (_SSLError, _HTTPError) as e:<br/>            if isinstance(e, _SSLError):<br/>&gt;               raise SSLError(e, request=request)<br/><span class="error">E               SSLError: [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] sslv3 alert handshake failure (_ssl.c:590)</span><br/><br/>../../.virtualenvs/moz-tests/lib/python2.7/site-packages/requests/adapters.py:514: SSLError<br/></div></td></tr></tbody>
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:43.428409</td>
+          <td class="col-time">2017-08-07 20:46:28.266531</td>
           <td class="col-name">tests/test_about_page.py::TestAboutPage::()::test_about_page</td>
           <td>None</td>
-          <td class="col-duration">5.82</td>
+          <td class="col-duration">2.73</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="6">
@@ -311,7 +468,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.435586</td>
+          <td class="col-time">2017-08-07 20:46:29.342912</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[accesskeys]</td>
           <td>None</td>
           <td class="col-duration">0.00</td>
@@ -322,7 +479,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.437039</td>
+          <td class="col-time">2017-08-07 20:46:29.344935</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[area-alt]</td>
           <td>None</td>
           <td class="col-duration">0.00</td>
@@ -333,7 +490,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.438480</td>
+          <td class="col-time">2017-08-07 20:46:29.347215</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[aria-allowed-attr]</td>
           <td>None</td>
           <td class="col-duration">0.00</td>
@@ -344,7 +501,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.439847</td>
+          <td class="col-time">2017-08-07 20:46:29.348963</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[aria-hidden-body]</td>
           <td>None</td>
           <td class="col-duration">0.00</td>
@@ -355,7 +512,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.441194</td>
+          <td class="col-time">2017-08-07 20:46:29.350683</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[aria-required-attr]</td>
           <td>None</td>
           <td class="col-duration">0.00</td>
@@ -366,7 +523,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.442521</td>
+          <td class="col-time">2017-08-07 20:46:29.352398</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[aria-required-children]</td>
           <td>None</td>
           <td class="col-duration">0.00</td>
@@ -377,7 +534,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.443859</td>
+          <td class="col-time">2017-08-07 20:46:29.354129</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[aria-required-parent]</td>
           <td>None</td>
           <td class="col-duration">0.00</td>
@@ -388,7 +545,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.445329</td>
+          <td class="col-time">2017-08-07 20:46:29.355778</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[aria-roles]</td>
           <td>None</td>
           <td class="col-duration">0.00</td>
@@ -399,7 +556,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.446649</td>
+          <td class="col-time">2017-08-07 20:46:29.357228</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[aria-valid-attr-value]</td>
           <td>None</td>
           <td class="col-duration">0.00</td>
@@ -410,7 +567,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.448022</td>
+          <td class="col-time">2017-08-07 20:46:29.358574</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[aria-valid-attr]</td>
           <td>None</td>
           <td class="col-duration">0.00</td>
@@ -421,7 +578,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.449394</td>
+          <td class="col-time">2017-08-07 20:46:29.359912</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[audio-caption]</td>
           <td>None</td>
           <td class="col-duration">0.00</td>
@@ -432,7 +589,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.450854</td>
+          <td class="col-time">2017-08-07 20:46:29.361366</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[blink]</td>
           <td>None</td>
           <td class="col-duration">0.00</td>
@@ -443,7 +600,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.452195</td>
+          <td class="col-time">2017-08-07 20:46:29.362695</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[button-name]</td>
           <td>None</td>
           <td class="col-duration">0.00</td>
@@ -454,7 +611,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.453567</td>
+          <td class="col-time">2017-08-07 20:46:29.364062</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[bypass]</td>
           <td>None</td>
           <td class="col-duration">0.00</td>
@@ -465,7 +622,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.454952</td>
+          <td class="col-time">2017-08-07 20:46:29.365390</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[checkboxgroup]</td>
           <td>None</td>
           <td class="col-duration">0.00</td>
@@ -476,7 +633,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.463598</td>
+          <td class="col-time">2017-08-07 20:46:29.392800</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[definition-list]</td>
           <td>Elements must have sufficient color contrast</td>
           <td class="col-duration">0.00</td>
@@ -487,7 +644,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.465239</td>
+          <td class="col-time">2017-08-07 20:46:29.394176</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[dlitem]</td>
           <td>Elements must have sufficient color contrast</td>
           <td class="col-duration">0.00</td>
@@ -498,7 +655,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.467919</td>
+          <td class="col-time">2017-08-07 20:46:29.395659</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[document-title]</td>
           <td>Elements must have sufficient color contrast</td>
           <td class="col-duration">0.00</td>
@@ -509,7 +666,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.469476</td>
+          <td class="col-time">2017-08-07 20:46:29.397058</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[duplicate-id]</td>
           <td>Elements must have sufficient color contrast</td>
           <td class="col-duration">0.00</td>
@@ -520,7 +677,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.471059</td>
+          <td class="col-time">2017-08-07 20:46:29.398426</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[empty-heading]</td>
           <td>Elements must have sufficient color contrast</td>
           <td class="col-duration">0.00</td>
@@ -531,7 +688,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.472421</td>
+          <td class="col-time">2017-08-07 20:46:29.399763</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[frame-title-unique]</td>
           <td>Elements must have sufficient color contrast</td>
           <td class="col-duration">0.00</td>
@@ -542,7 +699,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.490570</td>
+          <td class="col-time">2017-08-07 20:46:29.401266</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[frame-title]</td>
           <td>Elements must have sufficient color contrast</td>
           <td class="col-duration">0.00</td>
@@ -553,7 +710,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.492902</td>
+          <td class="col-time">2017-08-07 20:46:29.402598</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[heading-order]</td>
           <td>Elements must have sufficient color contrast</td>
           <td class="col-duration">0.00</td>
@@ -564,7 +721,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.494946</td>
+          <td class="col-time">2017-08-07 20:46:29.403915</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[hidden-content]</td>
           <td>Elements must have sufficient color contrast</td>
           <td class="col-duration">0.00</td>
@@ -575,7 +732,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.496693</td>
+          <td class="col-time">2017-08-07 20:46:29.405234</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[href-no-hash]</td>
           <td>Elements must have sufficient color contrast</td>
           <td class="col-duration">0.00</td>
@@ -586,7 +743,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.498431</td>
+          <td class="col-time">2017-08-07 20:46:29.406547</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[html-has-lang]</td>
           <td>Elements must have sufficient color contrast</td>
           <td class="col-duration">0.00</td>
@@ -597,7 +754,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.500305</td>
+          <td class="col-time">2017-08-07 20:46:29.408173</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[html-lang-valid]</td>
           <td>Elements must have sufficient color contrast</td>
           <td class="col-duration">0.00</td>
@@ -608,7 +765,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.502654</td>
+          <td class="col-time">2017-08-07 20:46:29.409505</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[image-alt]</td>
           <td>Elements must have sufficient color contrast</td>
           <td class="col-duration">0.00</td>
@@ -619,7 +776,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.504135</td>
+          <td class="col-time">2017-08-07 20:46:29.410828</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[image-redundant-alt]</td>
           <td>Elements must have sufficient color contrast</td>
           <td class="col-duration">0.00</td>
@@ -630,7 +787,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.506004</td>
+          <td class="col-time">2017-08-07 20:46:29.412143</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[input-image-alt]</td>
           <td>Elements must have sufficient color contrast</td>
           <td class="col-duration">0.00</td>
@@ -641,7 +798,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.507952</td>
+          <td class="col-time">2017-08-07 20:46:29.413617</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[label-title-only]</td>
           <td>Elements must have sufficient color contrast</td>
           <td class="col-duration">0.00</td>
@@ -652,7 +809,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.518079</td>
+          <td class="col-time">2017-08-07 20:46:29.422043</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[layout-table]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -663,7 +820,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.519629</td>
+          <td class="col-time">2017-08-07 20:46:29.423373</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[link-in-text-block]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -674,7 +831,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.521551</td>
+          <td class="col-time">2017-08-07 20:46:29.424998</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[link-name]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -685,7 +842,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.522966</td>
+          <td class="col-time">2017-08-07 20:46:29.426618</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[list]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -696,7 +853,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.524319</td>
+          <td class="col-time">2017-08-07 20:46:29.428316</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[listitem]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -707,7 +864,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.525668</td>
+          <td class="col-time">2017-08-07 20:46:29.429748</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[marquee]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -718,7 +875,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.527154</td>
+          <td class="col-time">2017-08-07 20:46:29.431221</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[meta-refresh]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -729,7 +886,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.528485</td>
+          <td class="col-time">2017-08-07 20:46:29.432535</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[meta-viewport-large]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -740,7 +897,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.529828</td>
+          <td class="col-time">2017-08-07 20:46:29.433861</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[meta-viewport]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -751,7 +908,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.531189</td>
+          <td class="col-time">2017-08-07 20:46:29.435186</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[object-alt]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -762,7 +919,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.532764</td>
+          <td class="col-time">2017-08-07 20:46:29.436662</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[p-as-heading]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -773,7 +930,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.534158</td>
+          <td class="col-time">2017-08-07 20:46:29.437999</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[radiogroup]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -784,7 +941,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.537683</td>
+          <td class="col-time">2017-08-07 20:46:29.439355</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[region]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -795,7 +952,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.539091</td>
+          <td class="col-time">2017-08-07 20:46:29.440714</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[scope-attr-valid]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -806,7 +963,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.540485</td>
+          <td class="col-time">2017-08-07 20:46:29.442048</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[server-side-image-map]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -817,7 +974,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.542011</td>
+          <td class="col-time">2017-08-07 20:46:29.445737</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[skip-link]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -828,7 +985,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.543393</td>
+          <td class="col-time">2017-08-07 20:46:29.447076</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[tabindex]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -839,7 +996,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.544739</td>
+          <td class="col-time">2017-08-07 20:46:29.448416</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[table-duplicate-name]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -850,7 +1007,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.546123</td>
+          <td class="col-time">2017-08-07 20:46:29.449748</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[table-fake-caption]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -861,7 +1018,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.547644</td>
+          <td class="col-time">2017-08-07 20:46:29.451232</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[td-has-header]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -872,7 +1029,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.548982</td>
+          <td class="col-time">2017-08-07 20:46:29.452597</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[td-headers-attr]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -883,7 +1040,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.550321</td>
+          <td class="col-time">2017-08-07 20:46:29.453968</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[th-has-data-cells]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -894,7 +1051,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.551668</td>
+          <td class="col-time">2017-08-07 20:46:29.455321</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[valid-lang]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -905,7 +1062,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.553111</td>
+          <td class="col-time">2017-08-07 20:46:29.456664</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[video-caption]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
@@ -916,7 +1073,7 @@ function filter_table(elem) {
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-time">2017-08-07 20:38:44.554690</td>
+          <td class="col-time">2017-08-07 20:46:29.458445</td>
           <td class="col-name">tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[video-description]</td>
           <td>Form elements must have labels</td>
           <td class="col-duration">0.00</td>
