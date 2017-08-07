@@ -1,4 +1,0 @@
-{
-  "tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[color-contrast]": true, 
-  "tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[label]": true
-}
