@@ -5,6 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from pages.home_page import Home
+from axe_selenium_python.test_accessibility_rules import TestAccessibility
 
 
 class TestRegister:

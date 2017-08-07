@@ -1,0 +1,5 @@
+{
+  "tests/test_about_page.py::TestAboutPage::()::test_that_links_in_the_about_page_return_200_code": true, 
+  "tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[duplicate-id]": true, 
+  "tests/test_about_page.py::TestAccessibility::()::test_accessibility_rules[label]": true
+}

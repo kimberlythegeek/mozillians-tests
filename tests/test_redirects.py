@@ -6,6 +6,7 @@
 
 import pytest
 import requests
+from axe_selenium_python.test_accessibility_rules import TestAccessibility
 
 
 class TestRedirects:

@@ -8,6 +8,7 @@ import pytest
 
 from pages.home_page import Home
 from pages.link_crawler import LinkCrawler
+from axe_selenium_python.test_accessibility_rules import TestAccessibility
 
 
 class TestAboutPage:
