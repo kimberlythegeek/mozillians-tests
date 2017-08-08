@@ -40,8 +40,6 @@ pipeline {
         always {
           archiveArtifacts 'results/*'
           junit 'results/*.xml'
-          submitToActiveData('results/py27_raw.txt')
-          submitToTreeherder('mozillians-tests', 'e2e', 'End-to-end integration tests', 'results/*', 'results/py27_tbpl.txt')
           publishHTML(target: [
             allowMissing: false,
             alwaysLinkToLastBuild: true,
@@ -60,7 +58,7 @@ pipeline {
         from: "firefox-test-engineering@mozilla.com",
         replyTo: "firefox-test-engineering@mozilla.com",
         subject: "Build failed in Jenkins: ${JOB_NAME} #${BUILD_NUMBER}",
-        to: "fte-ci@mozilla.com")
+        to: "kpennington@mozilla.com")
     }
     changed {
       ircNotification()
