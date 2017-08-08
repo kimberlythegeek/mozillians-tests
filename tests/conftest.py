@@ -69,6 +69,7 @@ def login_link(username):
         if link.startswith("https://auth.mozilla.auth0.com/passwordless/verify_redirect"):
             return link
 
+
 @pytest.mark.optionalhook
 def pytest_html_results_table_header(cells):
     cells.insert(2, html.th('Description'))
@@ -79,6 +80,7 @@ def pytest_html_results_table_header(cells):
 def pytest_html_results_table_row(report, cells):
     cells.insert(2, html.td(report.description))
     cells.insert(1, html.td(datetime.utcnow(), class_='col-time'))
+
 
 @pytest.mark.hookwrapper
 def pytest_runtest_makereport(item, call):

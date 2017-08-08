@@ -7,6 +7,7 @@
 from pages.home_page import Home
 from axe_selenium_python import Axe
 
+
 class TestRegister:
 
     def test_profile_creation(self, base_url, selenium, new_user):
