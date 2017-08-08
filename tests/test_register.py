@@ -5,8 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from pages.home_page import Home
-from axe_selenium_python.test_accessibility_rules import TestAccessibility
-
+from axe_selenium_python import Axe
 
 class TestRegister:
 
@@ -29,6 +28,11 @@ class TestRegister:
         profile.check_privacy()
 
         profile_page = profile.click_create_profile_button()
+
+        # Run aXe against page and check for violations
+        axe = Axe(selenium)
+        data = axe.execute()
+        assert len(data['violations']) == 0, axe.report(data['violations'])
 
         assert profile_page.was_account_created_successfully
         assert profile_page.is_pending_approval_visible

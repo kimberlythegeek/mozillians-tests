@@ -9,7 +9,6 @@ import pytest
 from random import randrange
 
 from pages.home_page import Home
-from axe_selenium_python.test_accessibility_rules import TestAccessibility
 
 
 class TestGroup:

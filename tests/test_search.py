@@ -10,7 +10,8 @@ import pytest
 import requests
 
 from pages.home_page import Home
-from axe_selenium_python.test_accessibility_rules import TestAccessibility
+
+from axe_selenium_python import Axe
 
 
 class TestSearch:
@@ -62,6 +63,12 @@ class TestSearch:
         query = u'Qwerty'
         home_page = Home(base_url, selenium)
         search_page = home_page.header.search_for(query)
+
+        # Run aXe against page and check for violations
+        axe = Axe(selenium)
+        data = axe.execute()
+        assert len(data['violations']) == 0, axe.report(data['violations'])
+
         assert 0 == search_page.results_count
 
     @pytest.mark.nondestructive
@@ -71,6 +78,12 @@ class TestSearch:
         query = u''
         home_page = Home(base_url, selenium)
         search_page = home_page.header.search_for(query)
+
+        # Run aXe against page and check for violations
+        axe = Axe(selenium)
+        data = axe.execute()
+        assert len(data['violations']) == 0, axe.report(data['violations'])
+
         assert search_page.results_count == 0
 
     @pytest.mark.xfail(reason="bug 977424 - API count and actual count do not return the same values")
