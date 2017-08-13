@@ -16,7 +16,7 @@ class TestAccessibility:
     @pytest.mark.credentials
     @pytest.mark.nondestructive
     def test_home_page_run_axe(self, base_url, selenium, pytestconfig, axe):
-        home_page = Home(base_url, selenium)
+        home_page = Home(base_url, selenium)    # NOQA
 
         pytestconfig.home_page = axe.run()
         assert pytestconfig.home_page is not None
@@ -57,7 +57,6 @@ class TestAccessibility:
         home_page = Home(base_url, selenium)
         home_page.footer.click_about_link()
         pytestconfig.about_page = axe.run()
-
 
     @pytest.mark.parametrize("rule", rules)
     @pytest.mark.nondestructive
