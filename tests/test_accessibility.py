@@ -4,6 +4,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import uuid
 import pytest
 
 from pages.home_page import Home
@@ -96,7 +97,7 @@ class TestAccessibility:
         # Create a new group
         group_name = str(uuid.uuid4())
         settings = home_page.header.click_settings_menu_item()
-        settings.create_group(group_name)
+        group = settings.create_group(group_name)
 
         pytestconfig.group_create_page = axe.run()
 
