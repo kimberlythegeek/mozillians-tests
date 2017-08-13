@@ -21,7 +21,6 @@ class TestAboutPage:
         assert about_mozillians_page.is_get_involved_section_present
 
     @pytest.mark.nondestructive
-    @pytest.mark.xfail
     def test_that_links_in_the_about_page_return_200_code(self, base_url):
         crawler = LinkCrawler(base_url)
         urls = crawler.collect_links('/about', id='main')
