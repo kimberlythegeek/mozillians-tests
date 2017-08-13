@@ -34,7 +34,7 @@ pipeline {
     stage('Test') {
       steps {
         writeCapabilities(capabilities, 'capabilities.json')
-        sh "tox -e py27 tests/test_accessibility"
+        sh "tox -e py27 tests/test_accessibility.py"
       }
       post {
         always {
