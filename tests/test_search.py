@@ -42,6 +42,7 @@ class TestSearch:
 
     @pytest.mark.credentials
     @pytest.mark.nondestructive
+    @pytest.mark.xfail
     def test_that_search_returns_results_for_irc_nickname(self, base_url, selenium, vouched_user):
         home_page = Home(base_url, selenium)
         home_page.login(vouched_user['email'])
