@@ -136,6 +136,6 @@ class TestAccessibility:
         violations = pytestconfig.group_search
         if(rule in violations):
             # Set docstring to description of current rule
-            TestAccessibility.test_group_create_page_accessibility.__func__.__doc__ = violations[rule]['help']
+            TestAccessibility.test_group_search_when_logged_in_accessibility.__func__.__doc__ = violations[rule]['help']
 
         assert rule not in violations, report(violations[rule])
