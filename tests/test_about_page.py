@@ -9,31 +9,16 @@ import pytest
 from pages.home_page import Home
 from pages.link_crawler import LinkCrawler
 
-from axe_selenium_python.test_accessibility_rules import report, rules
-from axe_selenium_python import Axe
-
 
 class TestAboutPage:
 
     @pytest.mark.nondestructive
-    def test_about_page(self, base_url, selenium, pytestconfig):
+    def test_about_page(self, base_url, selenium):
         home_page = Home(base_url, selenium)
         about_mozillians_page = home_page.footer.click_about_link()
 
-        # Run aXe against page and store results
-        axe = Axe(selenium)
-        pytestconfig.data = axe.execute()
-
         assert about_mozillians_page.is_privacy_section_present
         assert about_mozillians_page.is_get_involved_section_present
-
-    @pytest.mark.parametrize("rule", rules)
-    @pytest.mark.nondestructive
-    def test_accessibility_rules(self, pytestconfig, rule):
-        violations = dict((k['id'], k) for k in pytestconfig.data['violations'])
-        if(rule in violations):
-            TestAboutPage.test_accessibility_rules.__func__.__doc__ = violations[rule]['help']
-        assert rule not in violations, report(violations[rule])
 
     @pytest.mark.nondestructive
     @pytest.mark.xfail
