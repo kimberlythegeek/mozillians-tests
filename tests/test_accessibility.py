@@ -129,6 +129,7 @@ class TestAccessibility:
 
         assert rule not in violations, report(violations[rule])
 
+    @pytest.mark.parametrize("rule", rules)
     @pytest.mark.nondestructive
     @pytest.mark.credentials
     def test_group_search_when_logged_in_accessibility(self, pytestconfig, rule):
