@@ -11,10 +11,12 @@ from pages.home_page import Home
 
 from axe_selenium_python.test_accessibility import report, rules
 
+
 def set_docstring(rule, violations, function):
     if(rule in violations):
         # Set docstring to description of current rule
         function.__func__.__doc__ = violations[rule]['help']
+
 
 _MAIN_CONTENT = '#main'
 
@@ -199,7 +201,7 @@ class TestAccessibility:
         invite.click_invite()
 
         # Check if the pending invitation exists
-        invitations = group.invitations.invitations_list
+        group.invitations.invitations_list
         # Run aXe and store data in pytestconfig
         pytestconfig.group_invitations = axe.run(_MAIN_CONTENT)
 
@@ -237,7 +239,6 @@ class TestAccessibility:
 
         assert pytestconfig.invite_page is not None
         assert pytestconfig.invite_success_page is not None
-
 
     @pytest.mark.parametrize("rule", rules)
     @pytest.mark.credentials
