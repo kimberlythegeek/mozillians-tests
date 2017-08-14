@@ -21,7 +21,6 @@ _MAIN_CONTENT = '#main'
 
 class TestAccessibility:
 
-    @pytest.mark.nondestructive
     def test_header_footer_run_axe(self, base_url, selenium, pytestconfig, axe):
         home_page = Home(base_url, selenium)    # NOQA
 
@@ -33,21 +32,18 @@ class TestAccessibility:
         assert pytestconfig.footer is not None
 
     @pytest.mark.parametrize("rule", rules)
-    @pytest.mark.nondestructive
     def test_header_accessibility(self, pytestconfig, rule):
         violations = pytestconfig.header
         set_docstring(rule, violations, TestAccessibility.test_header_accessibility)
         assert rule not in violations, report(violations[rule])
 
     @pytest.mark.parametrize("rule", rules)
-    @pytest.mark.nondestructive
     def test_footer_accessibility(self, pytestconfig, rule):
         violations = pytestconfig.footer
         set_docstring(rule, violations, TestAccessibility.test_footer_accessibility)
         assert rule not in violations, report(violations[rule])
 
     @pytest.mark.credentials
-    @pytest.mark.nondestructive
     def test_header_footer_when_logged_in_run_axe(self, base_url, selenium, vouched_user, pytestconfig, axe):
         home_page = Home(base_url, selenium)
         home_page.login(vouched_user['email'])
@@ -61,7 +57,6 @@ class TestAccessibility:
 
     @pytest.mark.parametrize("rule", rules)
     @pytest.mark.credentials
-    @pytest.mark.nondestructive
     def test_header_when_logged_in_accessibility(self, pytestconfig, rule):
         violations = pytestconfig.header_logged_in
         set_docstring(rule, violations, TestAccessibility.test_header_when_logged_in_accessibility)
@@ -69,13 +64,11 @@ class TestAccessibility:
 
     @pytest.mark.parametrize("rule", rules)
     @pytest.mark.credentials
-    @pytest.mark.nondestructive
     def test_footer_when_logged_in_accessibility(self, pytestconfig, rule):
         violations = pytestconfig.footer_logged_in
         set_docstring(rule, violations, TestAccessibility.test_footer_when_logged_in_accessibility)
         assert rule not in violations, report(violations[rule])
 
-    @pytest.mark.nondestructive
     def test_home_page_run_axe(self, base_url, selenium, pytestconfig, axe):
         home_page = Home(base_url, selenium)    # NOQA
 
@@ -85,16 +78,13 @@ class TestAccessibility:
         assert pytestconfig.home_page is not None
 
     @pytest.mark.parametrize("rule", rules)
-    @pytest.mark.nondestructive
     def test_home_page_accessibility(self, pytestconfig, rule):
 
         violations = pytestconfig.home_page
         set_docstring(rule, violations, TestAccessibility.test_home_page_accessibility)
-
         assert rule not in violations, report(violations[rule])
 
     @pytest.mark.credentials
-    @pytest.mark.nondestructive
     def test_home_page_when_logged_in_run_axe(self, base_url, selenium, vouched_user, pytestconfig, axe):
         home_page = Home(base_url, selenium)
         home_page.login(vouched_user['email'])
@@ -106,13 +96,11 @@ class TestAccessibility:
 
     @pytest.mark.parametrize("rule", rules)
     @pytest.mark.credentials
-    @pytest.mark.nondestructive
     def test_home_page_when_logged_in_accessibility(self, pytestconfig, rule):
         violations = pytestconfig.home_page_logged_in
         set_docstring(rule, violations, TestAccessibility.test_home_page_when_logged_in_accessibility)
         assert rule not in violations, report(violations[rule])
 
-    @pytest.mark.nondestructive
     def test_about_page_run_axe(self, base_url, selenium, pytestconfig, axe):
         home_page = Home(base_url, selenium)
         home_page.footer.click_about_link()
@@ -123,13 +111,11 @@ class TestAccessibility:
         assert pytestconfig.about_page is not None
 
     @pytest.mark.parametrize("rule", rules)
-    @pytest.mark.nondestructive
     def test_about_page_accessibility(self, pytestconfig, rule):
         violations = pytestconfig.about_page
         set_docstring(rule, violations, TestAccessibility.test_about_page_accessibility)
         assert rule not in violations, report(violations[rule])
 
-    @pytest.mark.nondestructive
     @pytest.mark.credentials
     def test_settings_page_run_axe(self, base_url, selenium, vouched_user, axe, pytestconfig):
         home_page = Home(base_url, selenium)
@@ -143,13 +129,11 @@ class TestAccessibility:
 
     @pytest.mark.parametrize("rule", rules)
     @pytest.mark.credentials
-    @pytest.mark.nondestructive
     def test_settings_page_accessibility(self, pytestconfig, rule):
         violations = pytestconfig.settings_page
         set_docstring(rule, violations, TestAccessibility.test_settings_page_accessibility)
         assert rule not in violations, report(violations[rule])
 
-    @pytest.mark.nondestructive
     @pytest.mark.credentials
     def test_group_create_page_run_axe(self, base_url, selenium, vouched_user, axe, pytestconfig):
         home_page = Home(base_url, selenium)
@@ -184,7 +168,6 @@ class TestAccessibility:
 
     @pytest.mark.parametrize("rule", rules)
     @pytest.mark.credentials
-    @pytest.mark.nondestructive
     def test_group_create_page_accessibility(self, pytestconfig, rule):
         violations = pytestconfig.group_create_page
         set_docstring(rule, violations, TestAccessibility.test_group_create_page_accessibility)
@@ -192,8 +175,80 @@ class TestAccessibility:
 
     @pytest.mark.parametrize("rule", rules)
     @pytest.mark.credentials
-    @pytest.mark.nondestructive
     def test_group_search_when_logged_in_accessibility(self, pytestconfig, rule):
         violations = pytestconfig.group_search
         set_docstring(rule, violations, TestAccessibility.test_group_search_when_logged_in_accessibility)
+        assert rule not in violations, report(violations[rule])
+
+    @pytest.mark.credentials
+    def test_group_invitations_run_axe(self, base_url, selenium, vouched_user, axe, pytestconfig):
+        home_page = Home(base_url, selenium)
+        home_page.login(vouched_user['email'])
+
+        # Create a new group
+        group_name = str(uuid.uuid4())
+        settings = home_page.header.click_settings_menu_item()
+        group = settings.create_group(group_name)
+
+        # Invite a new member
+        invite = group.invitations.invite
+        # Run aXe and store data in pytestconfig
+        pytestconfig.group_invite = axe.run(_MAIN_CONTENT)
+        new_member = "Test User"
+        invite.invite_new_member(new_member)
+        invite.click_invite()
+
+        # Check if the pending invitation exists
+        invitations = group.invitations.invitations_list
+        # Run aXe and store data in pytestconfig
+        pytestconfig.group_invitations = axe.run(_MAIN_CONTENT)
+
+        assert pytestconfig.group_invite is not None
+        assert pytestconfig.group_invitations is not None
+
+    @pytest.mark.parametrize("rule", rules)
+    @pytest.mark.credentials
+    def test_group_invite_page_accessibility(self, pytestconfig, rule):
+        violations = pytestconfig.group_invite
+        set_docstring(rule, violations, TestAccessibility.test_group_invite_page_accessibility)
+        assert rule not in violations, report(violations[rule])
+
+    @pytest.mark.parametrize("rule", rules)
+    @pytest.mark.credentials
+    def test_group_invitations_page_accessibility(self, pytestconfig, rule):
+        violations = pytestconfig.group_invitations
+        set_docstring(rule, violations, TestAccessibility.test_group_invitations_page_accessibility)
+        assert rule not in violations, report(violations[rule])
+
+    @pytest.mark.credentials
+    def test_invite_page_run_axe(self, base_url, selenium, vouched_user, axe, pytestconfig):
+        home_page = Home(base_url, selenium)
+        home_page.login(vouched_user['email'])
+        invite_page = home_page.header.click_invite_menu_item()
+
+        # Run aXe and store data in pytestconfig
+        pytestconfig.invite_page = axe.run(_MAIN_CONTENT)
+
+        email_address = "user@example.com"
+        invite_page.invite(email_address, 'Just a bot sending a test invite to a test account.')
+
+        # Run aXe and store data in pytestconfig
+        pytestconfig.invite_success_page = axe.run(_MAIN_CONTENT)
+
+        assert pytestconfig.invite_page is not None
+        assert pytestconfig.invite_success_page is not None
+
+
+    @pytest.mark.parametrize("rule", rules)
+    @pytest.mark.credentials
+    def test_invite_page_accessibility(self, pytestconfig, rule):
+        violations = pytestconfig.invite_page
+        set_docstring(rule, violations, TestAccessibility.test_invite_page_accessibility)
+        assert rule not in violations, report(violations[rule])
+
+    @pytest.mark.parametrize("rule", rules)
+    @pytest.mark.credentials
+    def test_invite_success_page_accessibility(self, pytestconfig, rule):
+        violations = pytestconfig.invite_success_page
+        set_docstring(rule, violations, TestAccessibility.test_invite_success_page_accessibility)
         assert rule not in violations, report(violations[rule])
