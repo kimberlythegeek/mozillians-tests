@@ -12,23 +12,38 @@ from pages.home_page import Home
 from axe_selenium_python.test_accessibility import report, rules
 
 
+# ________________________________________________________________________
+# pytest.parametrize generates a series of test functions based on input given.
+# This function sets the docstring of each of the generated functions to the
+# description of the accessibility rule violated.
+# The docstring is included in the HTML report, giving more helpful information
+# on each failing test.
+# ________________________________________________________________________
 def set_docstring(rule, violations, function):
     if(rule in violations):
         # Set docstring to description of current rule
         function.__func__.__doc__ = violations[rule]['help']
 
 
+# Selector for content of pages (excludes the header and footer)
 _MAIN_CONTENT = '#main'
 
 
 class TestAccessibility:
 
+    # ________________________________________________________________________
+    # The first set of tests will run aXe against the header and footer only.
+    # Once while logged in, and once while logged out.
+    # This is to avoid overlapping results in the tests.
+    # If there is an error in the header or footer, it will display a maximum
+    # of twice, instead of once for each page that is evaluated.
+    # ________________________________________________________________________
     def test_header_footer_run_axe(self, base_url, selenium, pytestconfig, axe):
         home_page = Home(base_url, selenium)    # NOQA
 
         # Run aXe and store data in pytestconfig
-        pytestconfig.header = axe.run('header')
-        pytestconfig.footer = axe.run('footer')
+        pytestconfig.header = axe.run('header', None, 'critical')
+        pytestconfig.footer = axe.run('footer', None, 'critical')
 
         assert pytestconfig.header is not None
         assert pytestconfig.footer is not None
@@ -71,6 +86,10 @@ class TestAccessibility:
         set_docstring(rule, violations, TestAccessibility.test_footer_when_logged_in_accessibility)
         assert rule not in violations, report(violations[rule])
 
+    # ________________________________________________________________________
+    # The remainder of the tests will run exclusively against the body of the
+    # page, according the the _MAIN_CONTENT global set above.
+    # ________________________________________________________________________
     def test_home_page_run_axe(self, base_url, selenium, pytestconfig, axe):
         home_page = Home(base_url, selenium)    # NOQA
 
