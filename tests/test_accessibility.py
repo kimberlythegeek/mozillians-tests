@@ -66,8 +66,8 @@ class TestAccessibility:
         home_page.login(vouched_user['email'])
 
         # Run aXe and store data in pytestconfig
-        pytestconfig.header_logged_in = axe.run('header')
-        pytestconfig.footer_logged_in = axe.run('footer')
+        pytestconfig.header_logged_in = axe.run('header', None, 'critical')
+        pytestconfig.footer_logged_in = axe.run('footer', None, 'critical')
 
         assert pytestconfig.header_logged_in is not None
         assert pytestconfig.footer_logged_in is not None
@@ -94,7 +94,7 @@ class TestAccessibility:
         home_page = Home(base_url, selenium)    # NOQA
 
         # Run aXe and store data in pytestconfig
-        pytestconfig.home_page = axe.run(_MAIN_CONTENT)
+        pytestconfig.home_page = axe.run(_MAIN_CONTENT, None, 'critical')
 
         assert pytestconfig.home_page is not None
 
@@ -111,7 +111,7 @@ class TestAccessibility:
         home_page.login(vouched_user['email'])
 
         # Run aXe and store data in pytestconfig
-        pytestconfig.home_page_logged_in = axe.run(_MAIN_CONTENT)
+        pytestconfig.home_page_logged_in = axe.run(_MAIN_CONTENT, None, 'critical')
 
         assert pytestconfig.home_page_logged_in is not None
 
@@ -127,7 +127,7 @@ class TestAccessibility:
         home_page.footer.click_about_link()
 
         # Run aXe and store data in pytestconfig
-        pytestconfig.about_page = axe.run(_MAIN_CONTENT)
+        pytestconfig.about_page = axe.run(_MAIN_CONTENT, None, 'critical')
 
         assert pytestconfig.about_page is not None
 
@@ -144,7 +144,7 @@ class TestAccessibility:
         home_page.header.click_settings_menu_item()
 
         # Run aXe and store data in pytestconfig
-        pytestconfig.settings_page = axe.run(_MAIN_CONTENT)
+        pytestconfig.settings_page = axe.run(_MAIN_CONTENT, None, 'critical')
 
         assert pytestconfig.settings_page is not None
 
@@ -166,7 +166,7 @@ class TestAccessibility:
         group = settings.create_group(group_name)
 
         # Run aXe and store data in pytestconfig
-        pytestconfig.group_create_page = axe.run(_MAIN_CONTENT)
+        pytestconfig.group_create_page = axe.run(_MAIN_CONTENT, None, 'critical')
 
         # New group data
         new_group_description = 'This is an automated group.'
@@ -182,7 +182,7 @@ class TestAccessibility:
         search_listings.open_group(group_name)
 
         # Run aXe and store data in pytestconfig
-        pytestconfig.group_search = axe.run(_MAIN_CONTENT)
+        pytestconfig.group_search = axe.run(_MAIN_CONTENT, None, 'critical')
 
         assert pytestconfig.group_create_page is not None
         assert pytestconfig.group_search is not None
@@ -214,7 +214,7 @@ class TestAccessibility:
         # Invite a new member
         invite = group.invitations.invite
         # Run aXe and store data in pytestconfig
-        pytestconfig.group_invite = axe.run(_MAIN_CONTENT)
+        pytestconfig.group_invite = axe.run(_MAIN_CONTENT, None, 'critical')
         new_member = "Test User"
         invite.invite_new_member(new_member)
         invite.click_invite()
@@ -222,7 +222,7 @@ class TestAccessibility:
         # Check if the pending invitation exists
         group.invitations.invitations_list
         # Run aXe and store data in pytestconfig
-        pytestconfig.group_invitations = axe.run(_MAIN_CONTENT)
+        pytestconfig.group_invitations = axe.run(_MAIN_CONTENT, None, 'critical')
 
         assert pytestconfig.group_invite is not None
         assert pytestconfig.group_invitations is not None
@@ -248,13 +248,13 @@ class TestAccessibility:
         invite_page = home_page.header.click_invite_menu_item()
 
         # Run aXe and store data in pytestconfig
-        pytestconfig.invite_page = axe.run(_MAIN_CONTENT)
+        pytestconfig.invite_page = axe.run(_MAIN_CONTENT, None, 'critical')
 
         email_address = "user@example.com"
         invite_page.invite(email_address, 'Just a bot sending a test invite to a test account.')
 
         # Run aXe and store data in pytestconfig
-        pytestconfig.invite_success_page = axe.run(_MAIN_CONTENT)
+        pytestconfig.invite_success_page = axe.run(_MAIN_CONTENT, None, 'critical')
 
         assert pytestconfig.invite_page is not None
         assert pytestconfig.invite_success_page is not None
