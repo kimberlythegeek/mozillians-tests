@@ -6,6 +6,8 @@
 
 from pages.home_page import Home
 
+_MAIN_CONTENT = '#main'
+
 
 class TestRegister:
 
@@ -52,3 +54,36 @@ class TestRegister:
 
         profile = profile.click_create_profile_button(leavepage=False)
         assert 'Please correct the errors below.' == profile.error_message
+
+    # --------------------
+    # Accessibility Tests
+    # --------------------
+    def test_profile_create_page_accessibility(self, base_url, selenium, new_user, axe):
+        home_page = Home(base_url, selenium)
+        home_page.create_new_user(new_user['email'])
+
+        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        assert len(violations) == 0, axe.report(violations)
+
+    def test_pending_profile_page_accessibility(self, base_url, selenium, new_user, axe):
+        home_page = Home(base_url, selenium)
+        profile = home_page.create_new_user(new_user['email'])
+
+        # Click recaptcha box
+        profile.check_recaptcha()
+
+        # Full name
+        profile.set_full_name("New MozilliansUser")
+
+        # Location
+        profile.select_country("United States")
+        profile.select_region("California")
+        profile.select_city("Mountain View")
+
+        # Agree to privacy policy
+        profile.check_privacy()
+
+        profile.click_create_profile_button()
+
+        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        assert len(violations) == 0, axe.report(violations)

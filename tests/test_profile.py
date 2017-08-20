@@ -12,6 +12,8 @@ from selenium.webdriver.common.by import By
 from pages.home_page import Home
 from pages.link_crawler import LinkCrawler
 
+_MAIN_CONTENT = '#main'
+
 
 class TestProfile:
 
@@ -290,3 +292,78 @@ class TestProfile:
 
         settings = home_page.header.click_settings_menu_item()
         assert not settings.groups.is_find_group_link_visible
+
+    # --------------------
+    # Accessibility Tests
+    # --------------------
+    @pytest.mark.credentials
+    @pytest.mark.nondestructive
+    def test_profile_deletion_confirmation_accessibility(self, base_url, selenium, vouched_user, axe):
+        home_page = Home(base_url, selenium)
+        home_page.login(vouched_user['email'])
+        settings = home_page.header.click_settings_menu_item()
+
+        delete_form = settings.profile.delete_account
+        delete_form.check_acknowledgement()
+        delete_form.click_delete_profile()
+
+        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        assert len(violations) == 0, axe.report(violations)
+
+    @pytest.mark.credentials
+    def test_view_profile_page_accessibility(self, base_url, selenium, vouched_user, axe):
+        home_page = Home(base_url, selenium)
+        home_page.login(vouched_user['email'])
+        home_page.header.click_view_profile_menu_item()
+
+        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        assert len(violations) == 0, axe.report(violations)
+
+    @pytest.mark.credentials
+    @pytest.mark.nondestructive
+    def test_view_profile_page_as_public_when_logged_in_accessibility(self, base_url, selenium, private_user, axe):
+        home_page = Home(base_url, selenium)
+        home_page.login(private_user['email'])
+        profile_page = home_page.header.click_view_profile_menu_item()
+        profile_page.view_profile_as('Public')
+
+        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        assert len(violations) == 0, axe.report(violations)
+
+    @pytest.mark.credentials
+    @pytest.mark.nondestructive
+    def test_view_private_profile_when_not_logged_in_accessibility(self, base_url, selenium, private_user, axe):
+        home_page = Home(base_url, selenium)
+        home_page.open_user_profile(private_user['name'])
+
+        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        assert len(violations) == 0, axe.report(violations)
+
+    @pytest.mark.credentials
+    @pytest.mark.nondestructive
+    def test_external_accounts_page_accessibility(self, base_url, selenium, vouched_user, axe):
+        home_page = Home(base_url, selenium)
+        home_page.login(vouched_user['email'])
+        home_page.header.click_settings_menu_item()
+
+        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        assert len(violations) == 0, axe.report(violations)
+
+    @pytest.mark.credentials
+    @pytest.mark.nondestructive
+    def test_new_user_home_page_accessibility(self, base_url, selenium, unvouched_user, axe):
+        home_page = Home(base_url, selenium)
+        home_page.login(unvouched_user['email'])
+
+        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        assert len(violations) == 0, axe.report(violations)
+
+    @pytest.mark.credentials
+    @pytest.mark.nondestructive
+    def test_new_user_settings_page_accessibility(self, base_url, selenium, unvouched_user, axe):
+        home_page = Home(base_url, selenium)
+        home_page.login(unvouched_user['email'])
+        home_page.header.click_settings_menu_item()
+
+        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        assert len(violations) == 0, axe.report(violations)

@@ -11,6 +11,8 @@ import requests
 
 from pages.home_page import Home
 
+_MAIN_CONTENT = '#main'
+
 
 class TestSearch:
 
@@ -93,3 +95,17 @@ class TestSearch:
         ui_count = results_on_page * number_of_pages
 
         assert (ui_count - results_on_page) < api_count < (ui_count + results_on_page), u'API Count = %s : UI Count = %s.' % (api_count, ui_count)
+
+    # --------------------
+    # Accessibility Tests
+    # --------------------
+    @pytest.mark.credentials
+    @pytest.mark.nondestructive
+    def test_search_page_accessibility(self, base_url, selenium, vouched_user, axe):
+        query = u'Matt'
+        home_page = Home(base_url, selenium)
+        home_page.login(vouched_user['email'])
+        home_page.header.search_for(query, loggedin=True)
+
+        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        assert len(violations) == 0, axe.report(violations)
