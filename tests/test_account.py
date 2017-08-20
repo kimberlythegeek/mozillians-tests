@@ -9,6 +9,8 @@ import pytest
 from pages.home_page import Home
 from pages.link_crawler import LinkCrawler
 
+_MAIN_CONTENT = '#main'
+
 
 class TestAccount:
 

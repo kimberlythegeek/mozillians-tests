@@ -10,6 +10,8 @@ from random import randrange
 
 from pages.home_page import Home
 
+_MAIN_CONTENT = '#main'
+
 
 class TestGroup:
 
@@ -106,11 +108,10 @@ class TestGroup:
         # Create a new group
         group_name = str(uuid.uuid4())
         settings = home_page.header.click_settings_menu_item()
-        group = settings.create_group(group_name)
+        settings.create_group(group_name)
 
         violations = axe.run(_MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)
-
 
     @pytest.mark.credentials
     def test_group_search_accessibility(self, base_url, selenium, vouched_user, axe):
@@ -138,7 +139,6 @@ class TestGroup:
         violations = axe.run(_MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)
 
-
     @pytest.mark.credentials
     def test_group_invite_page_accessibility(self, base_url, selenium, vouched_user, axe):
         home_page = Home(base_url, selenium)
@@ -150,11 +150,10 @@ class TestGroup:
         group = settings.create_group(group_name)
 
         # Invite a new member
-        invite = group.invitations.invite
+        group.invitations.invite
 
         violations = axe.run(_MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)
-
 
     @pytest.mark.credentials
     def test_group_invitations_page_accessibility(self, base_url, selenium, vouched_user, axe):
