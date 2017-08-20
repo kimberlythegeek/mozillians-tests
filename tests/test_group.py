@@ -94,3 +94,86 @@ class TestGroup:
         invitations = group.invitations.invitations_list
         random_profile = randrange(len(invitations.search_invitation_list))
         assert new_member in invitations.search_invitation_list[random_profile].name
+
+    # --------------------
+    # Accessibility Tests
+    # --------------------
+    @pytest.mark.credentials
+    def test_group_create_page_accessibility(self, base_url, selenium, vouched_user, axe):
+        home_page = Home(base_url, selenium)
+        home_page.login(vouched_user['email'])
+
+        # Create a new group
+        group_name = str(uuid.uuid4())
+        settings = home_page.header.click_settings_menu_item()
+        group = settings.create_group(group_name)
+
+        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        assert len(violations) == 0, axe.report(violations)
+
+
+    @pytest.mark.credentials
+    def test_group_search_accessibility(self, base_url, selenium, vouched_user, axe):
+        home_page = Home(base_url, selenium)
+        home_page.login(vouched_user['email'])
+
+        # Create a new group
+        group_name = str(uuid.uuid4())
+        settings = home_page.header.click_settings_menu_item()
+        group = settings.create_group(group_name)
+
+        # New group data
+        new_group_description = 'This is an automated group.'
+        new_group_irc_channel = '#testgroup'
+
+        # Update the group description fields
+        group_description = group.description.description_info
+        group_description.set_description(new_group_description)
+        group_description.set_irc_channel(new_group_irc_channel)
+        group_description.click_update()
+
+        search_listings = home_page.header.search_for(group_name)
+        search_listings.open_group(group_name)
+
+        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        assert len(violations) == 0, axe.report(violations)
+
+
+    @pytest.mark.credentials
+    def test_group_invite_page_accessibility(self, base_url, selenium, vouched_user, axe):
+        home_page = Home(base_url, selenium)
+        home_page.login(vouched_user['email'])
+
+        # Create a new group
+        group_name = str(uuid.uuid4())
+        settings = home_page.header.click_settings_menu_item()
+        group = settings.create_group(group_name)
+
+        # Invite a new member
+        invite = group.invitations.invite
+
+        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        assert len(violations) == 0, axe.report(violations)
+
+
+    @pytest.mark.credentials
+    def test_group_invitations_page_accessibility(self, base_url, selenium, vouched_user, axe):
+        home_page = Home(base_url, selenium)
+        home_page.login(vouched_user['email'])
+
+        # Create a new group
+        group_name = str(uuid.uuid4())
+        settings = home_page.header.click_settings_menu_item()
+        group = settings.create_group(group_name)
+
+        # Invite a new member
+        invite = group.invitations.invite
+        new_member = "Test User"
+        invite.invite_new_member(new_member)
+        invite.click_invite()
+
+        # Check if the pending invitation exists
+        group.invitations.invitations_list
+
+        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        assert len(violations) == 0, axe.report(violations)

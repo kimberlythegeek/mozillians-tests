@@ -46,3 +46,15 @@ class TestAccount:
                 bad_urls.append(check_result)
 
         assert 0 == len(bad_urls), u'%s bad links found. ' % len(bad_urls) + ', '.join(bad_urls)
+
+    # --------------------
+    # Accessibility Tests
+    # --------------------
+    @pytest.mark.nondestructive
+    @pytest.mark.credentials
+    def test_settings_page_accessibility(self, base_url, selenium, vouched_user, axe):
+        home_page = Home(base_url, selenium)
+        home_page.login(vouched_user['email'])
+        home_page.header.click_settings_menu_item()
+        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        assert len(violations) == 0, axe.report(violations)

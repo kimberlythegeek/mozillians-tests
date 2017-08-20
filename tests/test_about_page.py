@@ -33,3 +33,12 @@ class TestAboutPage:
                 bad_urls.append(check_result)
 
         assert 0 == len(bad_urls), u'%s bad links found. ' % len(bad_urls) + ', '.join(bad_urls)
+
+    # --------------------
+    # Accessibility Tests
+    # --------------------
+    @pytest.mark.nondestructive
+    def test_about_page_accessibility(self, base_url, selenium, axe):
+        selenium.get(base_url)
+        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        assert len(violations) == 0, axe.report(violations)

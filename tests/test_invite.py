@@ -28,3 +28,28 @@ class TestInvite:
         invite_success_page = invite_page.invite(email_address, 'Just a bot sending a test invite to a test account.')
         assert "%s has been invited to Mozillians. They'll receive an email with instructions on how to join.\
  You can invite another Mozillian if you like." % email_address == invite_success_page.success_message
+
+    # --------------------
+    # Accessibility Tests
+    # --------------------
+
+    @pytest.mark.credentials
+    def test_invite_page_accessibility(self, base_url, selenium, vouched_user, axe):
+        home_page = Home(base_url, selenium)
+        home_page.login(vouched_user['email'])
+        invite_page = home_page.header.click_invite_menu_item()
+
+        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        assert len(violations) == 0, axe.report(violations)
+
+    @pytest.mark.credentials
+    def test_invite_success_page_accessibility(self, base_url, selenium, vouched_user, axe):
+        home_page = Home(base_url, selenium)
+        home_page.login(vouched_user['email'])
+        invite_page = home_page.header.click_invite_menu_item()
+
+        email_address = "user@example.com"
+        invite_page.invite(email_address, 'Just a bot sending a test invite to a test account.')
+
+        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        assert len(violations) == 0, axe.report(violations)
