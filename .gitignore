@@ -3,3 +3,4 @@
 *.tox
 results/
 .cache/
+__pycache__/
