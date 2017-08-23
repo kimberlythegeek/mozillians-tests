@@ -9,10 +9,10 @@ import pytest
 from pages.home_page import Home
 from pages.link_crawler import LinkCrawler
 
-_MAIN_CONTENT = '#main'
-
 
 class TestAboutPage:
+
+    _MAIN_CONTENT = '#main'
 
     @pytest.mark.nondestructive
     def test_about_page(self, base_url, selenium):
@@ -42,5 +42,5 @@ class TestAboutPage:
     @pytest.mark.nondestructive
     def test_about_page_accessibility(self, base_url, selenium, axe):
         selenium.get(base_url)
-        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        violations = axe.run(self._MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)

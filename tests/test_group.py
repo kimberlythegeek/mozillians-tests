@@ -10,10 +10,10 @@ from random import randrange
 
 from pages.home_page import Home
 
-_MAIN_CONTENT = '#main'
-
 
 class TestGroup:
+
+    _MAIN_CONTENT = '#main'
 
     @pytest.mark.credentials
     def test_group_description_edit(self, base_url, selenium, vouched_user):
@@ -110,7 +110,7 @@ class TestGroup:
         settings = home_page.header.click_settings_menu_item()
         settings.create_group(group_name)
 
-        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        violations = axe.run(self._MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)
 
     @pytest.mark.credentials
@@ -136,7 +136,7 @@ class TestGroup:
         search_listings = home_page.header.search_for(group_name)
         search_listings.open_group(group_name)
 
-        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        violations = axe.run(self._MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)
 
     @pytest.mark.credentials
@@ -152,7 +152,7 @@ class TestGroup:
         # Invite a new member
         group.invitations.invite
 
-        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        violations = axe.run(self._MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)
 
     @pytest.mark.credentials
@@ -174,5 +174,5 @@ class TestGroup:
         # Check if the pending invitation exists
         group.invitations.invitations_list
 
-        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        violations = axe.run(self._MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)

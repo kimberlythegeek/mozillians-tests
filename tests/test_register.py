@@ -6,10 +6,10 @@
 
 from pages.home_page import Home
 
-_MAIN_CONTENT = '#main'
-
 
 class TestRegister:
+
+    _MAIN_CONTENT = '#main'
 
     def test_profile_creation(self, base_url, selenium, new_user):
         home_page = Home(base_url, selenium)
@@ -62,7 +62,7 @@ class TestRegister:
         home_page = Home(base_url, selenium)
         home_page.create_new_user(new_user['email'])
 
-        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        violations = axe.run(self._MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)
 
     def test_pending_profile_page_accessibility(self, base_url, selenium, new_user, axe):
@@ -85,5 +85,5 @@ class TestRegister:
 
         profile.click_create_profile_button()
 
-        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        violations = axe.run(self._MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)

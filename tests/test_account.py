@@ -9,10 +9,10 @@ import pytest
 from pages.home_page import Home
 from pages.link_crawler import LinkCrawler
 
-_MAIN_CONTENT = '#main'
-
 
 class TestAccount:
+
+    _MAIN_CONTENT = '#main'
 
     @pytest.mark.credentials
     @pytest.mark.nondestructive
@@ -58,5 +58,5 @@ class TestAccount:
         home_page = Home(base_url, selenium)
         home_page.login(vouched_user['email'])
         home_page.header.click_settings_menu_item()
-        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        violations = axe.run(self._MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)

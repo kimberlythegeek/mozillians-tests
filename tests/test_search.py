@@ -10,10 +10,10 @@ import pytest
 
 from pages.home_page import Home
 
-_MAIN_CONTENT = '#main'
-
 
 class TestSearch:
+
+    _MAIN_CONTENT = '#main'
 
     @pytest.mark.xfail("'mozillians-dev' in config.getvalue('base_url')",
                        reason="Bug 944101 - Searching by email substring does not return all results")
@@ -84,5 +84,5 @@ class TestSearch:
         home_page.login(vouched_user['email'])
         home_page.header.search_for(query, loggedin=True)
 
-        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        violations = axe.run(self._MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)

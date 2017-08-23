@@ -12,10 +12,10 @@ from selenium.webdriver.common.by import By
 from pages.home_page import Home
 from pages.link_crawler import LinkCrawler
 
-_MAIN_CONTENT = '#main'
-
 
 class TestProfile:
+
+    _MAIN_CONTENT = '#main'
 
     @pytest.mark.credentials
     @pytest.mark.nondestructive
@@ -307,7 +307,7 @@ class TestProfile:
         delete_form.check_acknowledgement()
         delete_form.click_delete_profile()
 
-        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        violations = axe.run(self._MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)
 
     @pytest.mark.credentials
@@ -316,7 +316,7 @@ class TestProfile:
         home_page.login(vouched_user['email'])
         home_page.header.click_view_profile_menu_item()
 
-        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        violations = axe.run(self._MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)
 
     @pytest.mark.credentials
@@ -327,7 +327,7 @@ class TestProfile:
         profile_page = home_page.header.click_view_profile_menu_item()
         profile_page.view_profile_as('Public')
 
-        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        violations = axe.run(self._MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)
 
     @pytest.mark.credentials
@@ -336,7 +336,7 @@ class TestProfile:
         home_page = Home(base_url, selenium)
         home_page.open_user_profile(private_user['name'])
 
-        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        violations = axe.run(self._MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)
 
     @pytest.mark.credentials
@@ -346,7 +346,7 @@ class TestProfile:
         home_page.login(vouched_user['email'])
         home_page.header.click_settings_menu_item()
 
-        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        violations = axe.run(self._MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)
 
     @pytest.mark.credentials
@@ -355,7 +355,7 @@ class TestProfile:
         home_page = Home(base_url, selenium)
         home_page.login(unvouched_user['email'])
 
-        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        violations = axe.run(self._MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)
 
     @pytest.mark.credentials
@@ -365,5 +365,5 @@ class TestProfile:
         home_page.login(unvouched_user['email'])
         home_page.header.click_settings_menu_item()
 
-        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        violations = axe.run(self._MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)

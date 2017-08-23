@@ -8,10 +8,10 @@ import pytest
 
 from pages.home_page import Home
 
-_MAIN_CONTENT = '#main'
-
 
 class TestInvite:
+
+    _MAIN_CONTENT = '#main'
 
     @pytest.mark.credentials
     def test_inviting_an_invalid_email_address(self, base_url, selenium, vouched_user):
@@ -41,7 +41,7 @@ class TestInvite:
         home_page.login(vouched_user['email'])
         home_page.header.click_invite_menu_item()
 
-        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        violations = axe.run(self._MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)
 
     @pytest.mark.credentials
@@ -53,5 +53,5 @@ class TestInvite:
         email_address = "user@example.com"
         invite_page.invite(email_address, 'Just a bot sending a test invite to a test account.')
 
-        violations = axe.run(_MAIN_CONTENT, None, 'critical')
+        violations = axe.run(self._MAIN_CONTENT, None, 'critical')
         assert len(violations) == 0, axe.report(violations)
